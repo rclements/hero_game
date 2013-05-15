@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'konamio'
 require 'gosu'
 require './lib/player2'
 require './lib/map'
@@ -20,12 +21,12 @@ class Game < Window
   #  @camera_x = @camera_y = 0
   #end
 
-  def initialize
+  def initialize(hero = "./sprites/hero.png")
     super(640, 480, false)
     self.caption = "Cptn. Ruby"
     @sky = Image.new(self, "./media/Space.png", true)
     @map = Map.new(self, "./media/map.txt")
-    @cptn = Player2.new(self, 400, 100)
+    @cptn = Player2.new(self, 400, 100, hero)
     # The scrolling position is stored as top left corner of the screen.
     @camera_x = @camera_y = 0
   end
@@ -58,4 +59,13 @@ class Game < Window
   end
 end
 
-Game.new.show
+Konamio::Sequence::Requisition.new({
+  prompt:       "Enter passcode (or escape to start a new game)",
+  confirmation: "Get 'em Cptn. Ruby!",
+  cancellation: "You're a hero, Cptn. Ruby!"
+}).execute! {
+  @game = Game.new(["./sprites/013-Warrior01.png", "./sprites/009-Lancer01.png"].sample)
+}
+
+@game ||= Game.new
+@game.show
