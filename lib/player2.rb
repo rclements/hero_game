@@ -2,12 +2,12 @@
 class Player2
   attr_reader :x, :y
 
-  def initialize(window, x, y)
+  def initialize(window, x, y, hero = "./sprites/hero.png")
     @x, @y = x, y
     @dir = :left
     @map = window.map
     # Load all animation frames
-    @stand_down1, @walk_down1, @stand_down2, @walk_down2, @left_stand1, @walk_left1, @left_stand2, @walk_left2, @right_stand1, @walk_right1, @right_stand2, @walk_right2, @up_stand1, @walk_up1, @up_stand2, @walk_up2 = *Image.load_tiles(window, "./sprites/hero.png", 32, 49, false)
+    @stand_down1, @walk_down1, @stand_down2, @walk_down2, @left_stand1, @walk_left1, @left_stand2, @walk_left2, @right_stand1, @walk_right1, @right_stand2, @walk_right2, @up_stand1, @walk_up1, @up_stand2, @walk_up2 = *Image.load_tiles(window, hero, 32, 49, false)
     # This always points to the frame that is currently drawn.
     # This is set in update, and used in draw.
     @cur_image = @stand_down1
